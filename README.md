@@ -6,7 +6,7 @@ A small, **fictional** white-label telehealth storefront. I built it to practice
 
 > **Fernwell Care is not a real company or medical service.** All names, numbers and content are made up, the intake form collects and sends nothing, and nothing here is medical advice. It is an independent portfolio project and uses no assets from any real product.
 
-**Live demo:** _add your Vercel link here_
+**Live demo:** https://telehealth-storefront-demo.vercel.app/
 
 **Stack:** Next.js (App Router) · React · TypeScript · Tailwind CSS v4 · Framer Motion
 
@@ -36,13 +36,13 @@ A small, **fictional** white-label telehealth storefront. I built it to practice
 
 ## Lighthouse
 
-Run against the production build (`npm run build && npm start`) with Lighthouse's default mobile emulation:
+Run against the live Vercel deployment with Lighthouse's default mobile emulation:
 
 | Performance | Accessibility | Best Practices | SEO |
 |---|---|---|---|
-| 97 | 100 | 100 | 100 |
+| 98 | 100 | 100 | 100 |
 
-First Contentful Paint 0.8 s · Largest Contentful Paint 2.6 s · Total Blocking Time 10 ms · Cumulative Layout Shift 0. Full report: [`docs/lighthouse-report.html`](docs/lighthouse-report.html).
+First Contentful Paint 0.9 s · Largest Contentful Paint 2.3 s · Total Blocking Time 20 ms · Cumulative Layout Shift 0. Full report: [`docs/lighthouse-report.html`](docs/lighthouse-report.html).
 
 Automated tools catch only part of accessibility. I verified the reduced-motion behavior using Chrome's forced reduced-motion setting. I have **not** yet done a full manual keyboard pass or a screen-reader pass, so treat the accessibility claims as "built with care and automatically checked", not "audited".
 
