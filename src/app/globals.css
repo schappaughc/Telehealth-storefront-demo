@@ -1,26 +1,131 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/*
+  White-label theming: every brand colour is a CSS variable, swapped by
+  [data-theme]. Components only ever use the semantic tokens (bg-brand,
+  text-ink, ...), so a new brand is one block of variables, not a rewrite.
+  All text/background pairs below were chosen to meet WCAG 2.1 AA (4.5:1).
+*/
+:root,
+[data-theme="fern"] {
+  --bg: #f6f4ee;
+  --ink: #1d2b24;
+  --muted: #4a5750;
+  --brand: #2f6b4f;
+  --brand-ink: #ffffff;
+  --deep: #17352a;
+  --on-deep: #f6f4ee;
+  --soft: #dcebe2;
+  --accent: #a8431f;
+  --line: #cfd6cf;
+}
+
+[data-theme="dusk"] {
+  --bg: #f4f3f8;
+  --ink: #1f1d33;
+  --muted: #4d4b66;
+  --brand: #4a45a8;
+  --brand-ink: #ffffff;
+  --deep: #231f4d;
+  --on-deep: #f4f3f8;
+  --soft: #e3e1f4;
+  --accent: #a8402a;
+  --line: #d2d0e2;
+}
+
+[data-theme="clay"] {
+  --bg: #faf3ee;
+  --ink: #33221b;
+  --muted: #5e4a40;
+  --brand: #9a4a2b;
+  --brand-ink: #ffffff;
+  --deep: #3f1f12;
+  --on-deep: #faf3ee;
+  --soft: #f1ddd0;
+  --accent: #1f6b6b;
+  --line: #e1cfc3;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-bg: var(--bg);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-brand: var(--brand);
+  --color-brand-ink: var(--brand-ink);
+  --color-deep: var(--deep);
+  --color-on-deep: var(--on-deep);
+  --color-soft: var(--soft);
+  --color-accent: var(--accent);
+  --color-line: var(--line);
+  --font-sans: var(--font-inter);
+  --font-display: var(--font-fraunces);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+html {
+  scroll-padding-top: 5rem;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
   }
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-inter), system-ui, sans-serif;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* A visible, consistent keyboard focus ring everywhere. */
+:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* ---- Hero background: drifting leaves, pure CSS, pausable ---- */
+.leaf {
+  position: absolute;
+  top: -12%;
+  width: var(--size);
+  height: var(--size);
+  left: var(--x);
+  opacity: 0.22;
+  color: var(--on-deep);
+  transform: rotate(var(--rot));
+  animation: drift var(--dur) linear infinite;
+  animation-delay: var(--delay);
+  will-change: transform;
+}
+
+@keyframes drift {
+  from {
+    transform: translate3d(0, 0, 0) rotate(var(--rot));
+  }
+  50% {
+    transform: translate3d(var(--sway), 60vh, 0) rotate(calc(var(--rot) + 90deg));
+  }
+  to {
+    transform: translate3d(0, 125vh, 0) rotate(calc(var(--rot) + 180deg));
+  }
+}
+
+[data-paused="true"] .leaf {
+  animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .leaf {
+    animation: none;
+    top: var(--still-y);
+  }
+  /* Static leaves would sit behind the headline, so keep only the right side. */
+  .leaf:nth-child(-n + 6) {
+    display: none;
+  }
+  .motion-control {
+    display: none;
+  }
 }
